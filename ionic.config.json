@@ -1,0 +1,7 @@
+{
+  "name": "charts-example",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
