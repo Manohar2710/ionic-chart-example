@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import * as Highcharts from 'highcharts';
 import * as HighCharts from 'highcharts';
+import Drilldown from 'highcharts/modules/drilldown';
+Drilldown(Highcharts);
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +10,7 @@ import * as HighCharts from 'highcharts';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  @ViewChild("highcharts-areaspline-chart", { read: ElementRef }) container: ElementRef;
 
   constructor() {}
 
@@ -15,7 +19,7 @@ export class Tab3Page {
     this.plotSimpleStackedBarChart();
     this.plotSimplePieChart();
     this.plotDynamicSplineChart();
-    this.plotSimpleAreaSplineChart();
+    this.plotSimpleDrilldownChart();
 
   }
 
@@ -217,32 +221,64 @@ export class Tab3Page {
 
     });
   }
-  plotSimpleAreaSplineChart(){
-    let myChart = HighCharts.chart('highcharts-areaspline-chart', {
-      chart: {
-        type: 'areaspline'
-      },
-      title: {
-        text: 'Fruit Consumption'
-      },
-      xAxis: {
-        categories: ['Apples', 'Bananas', 'Oranges']
-      },
-      yAxis: {
-        title: {
-          text: 'Fruit eaten'
-        }
-      },
-      series: [{
-        type: 'bellcurve',
-        xAxis: 1,
-        yAxis: 1,
-        baseSeries: 1
+  plotSimpleDrilldownChart(){
+    Highcharts.chart("highcharts-drilldown-chart", {
+      // Created pie chart using Highchart
+    chart: {
+      type: 'column'
+    },
+
+  xAxis: {
+    type: 'category'
+  },
+  series: [{
+    name: 'Things',
+    type: undefined,
+    data: [{
+        name: 'Animals',
+        y: 5,
+        drilldown: 'animals'
     }, {
-        data: [3.5, 3, 3.2, 3.1, 3.6, 3.9, 3.4],
-        type:undefined
+        name: 'Fruits',
+        y: 2,
+        drilldown: 'fruits'
+    }, {
+        name: 'Cars',
+        y: 4,
+        drilldown: 'cars'
     }]
-    });
+}],
+drilldown: {
+    series: [{
+        id: 'animals',
+        type: undefined,
+        data: [
+            ['Cats', 4],
+            ['Dogs', 2],
+            ['Cows', 1],
+            ['Sheep', 2],
+            ['Pigs', 1]
+        ]
+    }, {
+        id: 'fruits',
+        type: undefined,
+        data: [
+            ['Apples', 4],
+            ['Oranges', 2]
+        ]
+    }, {
+        id: 'cars',
+        type: undefined,
+        data: [
+            ['Toyota', 4],
+            ['Opel', 2],
+            ['Volkswagen', 2]
+        ]
+    }]
+}
+    })
+  
+  
   
   }
 
