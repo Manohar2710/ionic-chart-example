@@ -9,12 +9,45 @@
 </ion-header>
 
 <ion-content>
-  <h2>Bar Chart</h2>
+  <!-- <h2>Bar Chart</h2>
   <div id="barChart"></div>
 
   <h5 text-center>Employee Statistic of Diff Company</h5>
 
   <div id="pieChart"></div>
-  <h5 text-center>Election Result of India 2019</h5>
-
+  <h5 text-center>Election Result of India 2019</h5> -->
+  <ion-card  *ngFor = "let data of stockDataList; let i = index" class="welcome-card" >
+    <!-- <ion-card-header>
+      <ion-card-title>Simple Bar Chart</ion-card-title>
+    </ion-card-header> -->
+    <ion-card-content class="stock-content">
+      <div id="stock-status" style="width:100%; height:50px;"> 
+        <ion-grid class="stock-ion-grid">
+          <ion-row>
+            <ion-col size="6">
+              <div>
+                {{data.name}}
+              </div>
+              <div>
+                {{data.description}}
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div>
+                <div id="highcharts-spline-chart-{{data.id}}" ></div>
+              </div>
+            </ion-col>
+            <ion-col style="text-align: end;">
+              <div>
+                {{data.stockValue}}
+              </div>
+              <div>
+                <button>{{data.buttonValue}}</button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
