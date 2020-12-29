@@ -573,7 +573,7 @@ drilldown: {
 
   plotSimpleRangeSelectorLineChart(){
     Highcharts.stockChart('highcharts-range-selector-graph-chart', {
-
+      
       title: {
           text: 'AAPL Stock Price'
       },

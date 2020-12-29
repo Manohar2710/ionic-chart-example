@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { StorageService } from '../storage.service';
+// import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -14,7 +16,39 @@ export class Tab2Page implements AfterViewInit{
   barChart: any;
   doughnutChart: any;
   lineChart: any;
-  constructor() {}
+  constructor(public storageService: StorageService) {
+    this.storeSingleValue('user_name','Shadman')
+    console.log(this.getSingleValue('user_name'))
+    // this.sqlite.create({
+    //   name: 'data.db',
+    //   location: 'default'
+    // }).then((db: SQLiteObject) => {
+    
+    //     db.executeSql('create table danceMoves(name VARCHAR(32))', [])
+    //       .then(() => console.log('Executed SQL'))
+    //       .catch(e => console.log(e));
+    //   })
+    //   .catch(e => console.log(e));
+  }
+  getSingleValue(arg0: string): any {
+    this.storageService.get(arg0).then(result => {
+      if (result != null) {
+      console.log('Username: '+ result);
+      return result;
+      }
+      }).catch(e => {
+      console.log('error: '+ e);
+      // Handle errors here
+      });
+    }
+  storeSingleValue(arg0: string,arg1: string) {
+    this.storageService.set(arg0, arg1).then(result => {
+      console.log('Data is saved');
+      }).catch(e => {
+      console.log("error: " + e);
+      });  }
+
+
   ngAfterViewInit(): void {
     this.barChartMethod();
     this.doughnutChartMethod();

@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 import stock from 'highcharts/modules/stock.src';
 import more from 'highcharts/highcharts-more.src';
+// import { SQLite } from '@ionic-native/sqlite/ngx';
+import { IonicStorageModule } from '@ionic/storage';
 
 export function highchartsModules() {
   // apply Highcharts Modules to this array
@@ -19,7 +21,7 @@ export function highchartsModules() {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ChartModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ChartModule,IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,

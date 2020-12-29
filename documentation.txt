@@ -1,0 +1,87 @@
+1) Simple Bar Chart
+    syntax:
+        [{name:"<name>",type:undefined,data:[1,2,3....]}...]
+    example:
+        [{
+          name: 'Jane',
+          type: undefined,
+          data: [-1, 0, 4]
+        }],
+2) Simple Stacked Bar Chart
+    syntax:
+        series:[{name:"<name>",type:undefined,data:[1,2,3....]}...]
+    
+    example:
+        series: [{
+          name: 'Jane',
+          type: undefined,
+          data: [-1, 0, 4]
+        }],
+
+3) Simple Pie Chart
+    syntax:
+        series: [{name:"<name>",type:undefined,data:[{name:"<name>",y:0.0,sliced:true,selected: true},{name:"<name>",y:1s.0,}]}...]
+    example:
+        series: [{
+                name: 'Chrome',
+                type: undefined,
+                data: [{
+                        name: 'Chrome',
+                        y: 61.41,
+                        sliced: true,
+                        selected: true
+                    },{
+                        name: 'Internet Explorer',
+                        y: 11.84
+                    }]
+            }],
+
+3) Simple Dynamic Chart
+    syntax:
+        series:[{name:"<name>",type:undefined,data:[1,2,3....]}...]
+    
+    example:
+        series: [{
+          name: 'Jane',
+          type: undefined,
+          data: [-1, 0, 4]
+        }],
+
+4)Simple drilldown Chart
+    syntax:
+        series:[{name:"<name>",type:undefined,data:[{name:"<name>",y:0.0,drilldown: '<drilldown_name>'},{name:"<name>",y:0.0,drilldown: '<drilldown_name>'}....]}...]
+        drilldown: {series: [{id: 'animals',type: undefined,data: [["<name>","<value>"],["<name>","<value>"],.....]},{id: 'animals',type: undefined,data: [["<name>","<value>"],["<name>","<value>"],.....]},.....]}
+    example:
+        series: [{
+            name: 'Things',
+            type: undefined,
+            data: [{
+                name: 'Animals',
+                y: 5,
+                drilldown: 'animals'
+            }, {
+                name: 'Fruits',
+                y: 2,
+                drilldown: 'fruits'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: 'animals',
+                type: undefined,
+                data: [
+                    ['Cats', 4],
+                    ['Dogs', 2],
+                    ['Cows', 1],
+                    ['Sheep', 2],
+                    ['Pigs', 1]
+                ]
+            }, {
+                id: 'fruits',
+                type: undefined,
+                data: [
+                    ['Apples', 4],
+                    ['Oranges', 2]
+                ]
+            }]
+        }
