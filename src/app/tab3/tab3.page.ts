@@ -12,6 +12,7 @@ Cylinder(Highcharts);
 import  HighchartsMore from "highcharts/highcharts-more";
 import { highChartData } from '../data/data';
 import { StockChart } from 'angular-highcharts';
+import { StorageService } from '../storage.service';
 HighchartsMore(Highcharts);
 
 @Component({
@@ -21,10 +22,34 @@ HighchartsMore(Highcharts);
 })
 export class Tab3Page {
   stock: StockChart;
-  constructor() {}
+  constructor(private storageService:StorageService) {
+    let dataPayload = {
+      labels:['Apples1', 'Bananas2', 'Oranges3'],
+      title:"Fruit Consumption1",
+      y_axis_title:"Fruit eaten2",
+      series:[{
+          name: 'Jane1',
+          type: undefined,
+          data: [-1, 0, 4]
+      },
+      {
+          name: 'John2',
+          type: undefined,
+          data: [5, 7, 3]
+      }]
+    }
+    this.storageService.setObject("simple_bar_chart",dataPayload)
+    .then(result=>{
+      console.log("data Payload Saved",result)
+      this.plotSimpleBarChart();
+    })
+    .catch(error=>{
+      console.log("error : data Payload not Saved",error)
+    })
+  }
 
   ionViewDidEnter() {
-    this.plotSimpleBarChart();
+    // this.plotSimpleBarChart();
     this.plotSimpleStackedBarChart();
     this.plotSimplePieChart();
     this.plotDynamicSplineChart();
@@ -41,33 +66,58 @@ export class Tab3Page {
   }
 
   plotSimpleBarChart() {
-    let myChart = Highcharts.chart('highcharts-barchart', {
-      chart: {
-        type: 'bar'
-      },
-      title: {
-        text: 'Fruit Consumption'
-      },
-      xAxis: {
-        categories: ['Apples', 'Bananas', 'Oranges']
-      },
-      yAxis: {
-        title: {
-          text: 'Fruit eaten'
-        }
-      },
-      series: [
-        {
-          name: 'Jane',
-          type: undefined,
-          data: [-1, 0, 4]
+    var payloadData:any = null
+    this.storageService.getObject("simple_bar_chart")
+    .then(result=>{
+      console.log("simple_bar_chart result",result)
+      payloadData = result
+      let myChart = Highcharts.chart('highcharts-barchart', {
+        chart: {
+          type: 'bar'
         },
-        {
-          name: 'John',
-          type: undefined,
-          data: [5, 7, 3]
-        }]
-    });
+        title: {
+          text: payloadData.title
+        },
+        xAxis: {
+          categories: payloadData.labels
+        },
+        yAxis: {
+          title: {
+            text: payloadData.y_axis_title
+          }
+        },
+        series: payloadData.series
+      });
+    })
+    .catch(error=>{
+      let myChart = Highcharts.chart('highcharts-barchart', {
+        chart: {
+          type: 'bar'
+        },
+        title: {
+          text: "Fruit Consumption"
+        },
+        xAxis: {
+          categories: ['Apples', 'Bananas', 'Oranges']
+        },
+        yAxis: {
+          title: {
+            text: 'Fruit eaten'
+          }
+        },
+        series: [
+          {
+            name: 'Jane',
+            type: undefined,
+            data: [-1, 0, 4]
+          },
+          {
+            name: 'John',
+            type: undefined,
+            data: [5, 7, 3]
+          }]
+      });    
+    })
   }
   plotSimpleStackedBarChart() {
     let myChart = Highcharts.chart('highcharts-stacked-barchart', {
